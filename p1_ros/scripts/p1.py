@@ -48,7 +48,7 @@ def roda_todo_frame(imagem):
 	try:
 		antes = time.clock()
 		cv_image = bridge.compressed_imgmsg_to_cv2(imagem, "bgr8")
-		media, centro, area =  visao_module.processa(cv_image)
+		centro, imagem, resultados =  visao_module.processa(cv_image)
 
 
 		depois = time.clock()
