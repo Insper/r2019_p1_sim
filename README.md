@@ -1,8 +1,11 @@
-# r2019_p1_sim
-Robótica 2019 - prova 1 - simulado
 
-MobileNetSSD_deploy.caffemodel
-MobileNetSSD_deploy.prototxt.txt
+
+# Robótica 2019 - prova 1 - simulado
+
+Copie os seguintes arquivos do demo de *mobilenet* da aula03 para a pasta `~/catkin_ws/src/r2019_p1_sim/p1_ros/scripts`
+
+    MobileNetSSD_deploy.caffemodel
+    MobileNetSSD_deploy.prototxt.txt
 
 Baixe o conteúdo do repositório para seu ~/catkin_ws/src/
 
