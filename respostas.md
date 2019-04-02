@@ -114,9 +114,41 @@ def find_circles(imagem_bgr):
 
 Identifique quando as questões **(1)** e **(2)** acontecerem ao mesmo tempo. Decida o que o robô deverá fazer
 
+### Resposta
+
+No código  da forma que está no gabarito (ver o while do main) o robô iria inicialmente para frente, depois para trás.
+
+```python
+            vel = Twist(Vector3(0,0,0), Vector3(0,0,0))
+
+            if viu_bird:
+                vel = Twist(Vector3(0.4,0,0), Vector3(0,0,0))
+                velocidade_saida.publish(vel)
+                rospy.sleep(0.8)
+                viu_bird = False
+                continue
+
+            if viu_circulo:
+                vel = Twist(Vector3(-0.4,0,0), Vector3(0,0,0))
+                velocidade_saida.publish(vel)
+                rospy.sleep(0.8)
+                viu_circulo = False
+                continue
+
+            velocidade_saida.publish(vel)
+            rospy.sleep(0.1)
+
+```
+
 ## 4. 
 
-Explique como você faria se só interessasse a você andar para trás quando o círculo fosse azul (RGB 255,0,0) ou mais escuro.
+Explique como você faria se só interessasse a você andar para trás quando o círculo fosse azul (RGB 0,0,255) ou mais escuro.
+
+### R.:
+
+É possível filtrar (usando `inRange` ou o canal `R` de uma imagem RGB para selecionar primeiro os pixels azuis) obtendo uma imagem inicial
+
+A partir desta selećão é possível usar o detector de bordas de *Canny* e a seguir partir para o `Houghcircles` 
 
 ## 5. 
 
