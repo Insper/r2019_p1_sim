@@ -4,4 +4,4 @@
 
 [Enunciado original](enunciado.md)
 
-[Respostas](resposta.md)
+[Respostas](respostas.md)
