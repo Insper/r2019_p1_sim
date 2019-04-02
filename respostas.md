@@ -49,10 +49,66 @@ Vamos adicionar um `print` para inspecionar a variável `resultados`. Vemos que 
 
 Da aula de *MobileNet*, lembramos que estes elementos são, respectivamente, `categoria`, `confianća`, `ponto inicial` e `ponto final`
 
+O commit para identificar a adicão do pássaro pode ser visto [no Github aqui](https://github.com/Insper/r2019_p1_sim/commit/8b7dfec354650fb062a18a12ec8a9e2b60ba3299)
+
 
 ## 2. 
 
 Modifique o código do item anterior para que seu robô sempre ande para trás quando enxergar um círculo
+
+Vamos portar os trechos de `draw_circles_video.py` que permitirão detectarmos um círculo.
+
+Este commit está [principalmente aqui](https://github.com/Insper/r2019_p1_sim/commit/76dca99236ebcd5ef0d98427448bc766ff8ddd7b)
+
+```python
+def auto_canny(image, sigma=0.33):
+    # compute the median of the single channel pixel intensities
+    v = np.median(image)
+
+    # apply automatic Canny edge detection using the computed median
+    lower = int(max(0, (1.0 - sigma) * v))
+    upper = int(min(255, (1.0 + sigma) * v))
+    edged = cv2.Canny(image, lower, upper)
+
+    # return the edged image
+    return edged
+
+def find_circles(imagem_bgr):
+
+    gray = cv2.cvtColor(imagem_bgr, cv2.COLOR_BGR2GRAY)
+    # A gaussian blur to get rid of the noise in the image
+    blur = cv2.GaussianBlur(gray,(5,5),0)
+    #blur = gray
+    # Detect the edges present in the image
+    bordas = auto_canny(blur)
+    bordas_color = cv2.cvtColor(bordas, cv2.COLOR_GRAY2BGR)
+    circles = None
+
+    # Not: precisamos aumentar o maxRadius - veja a documentacao
+    circles=cv2.HoughCircles(bordas,cv2.HOUGH_GRADIENT,2,40,param1=50,param2=100,minRadius=5,maxRadius=500)
+
+    if circles is not None:
+        circles = np.uint16(np.around(circles))
+
+        for i in circles[0,:]:
+            print(i)
+            # draw the outer circle
+            # cv2.circle(img, center, radius, color[, thickness[, lineType[, shift]]])
+            cv2.circle(bordas_color,(i[0],i[1]),i[2],(0,255,0),2)
+            # draw the center of the circle
+            cv2.circle(bordas_color,(i[0],i[1]),2,(0,0,255),3)
+
+    cv2.imshow("circulos", bordas_color)
+
+    if circles is not None:
+        return True
+    else:
+        return False
+
+
+
+```
+
 
 ## 3.
 
