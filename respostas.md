@@ -204,7 +204,7 @@ geometry_msgs/TwistWithCovariance twist
 
 ```
 
-**Resposta: ** Vamos precisar fazer um objeto *Subscriber* para mensagens do tipo *nav_msgs/Odometry* e um método para receber notificacões. As mensagens de odometria tem variáveis `position.x`, `position.y` e `position.z` que trarão a posicão do robô .
+**Resposta:** Vamos precisar fazer um objeto *Subscriber* para mensagens do tipo *nav_msgs/Odometry* e um método para receber notificacões. As mensagens de odometria tem variáveis `position.x`, `position.y` e `position.z` que trarão a posicão do robô .
 
 Basta descobrirmos a posićão atual usando a primeira notificaćão de odometria e em seguida monitorar até que a distância entre a posićão atual a e inicial seja de $50m$. Quando a distância for de $50m$ deveremos parar o robô para evitar que o mesmo fique sem bateria.
 
