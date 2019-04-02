@@ -49,8 +49,15 @@ Vamos adicionar um `print` para inspecionar a variável `resultados`. Vemos que 
 
 Da aula de *MobileNet*, lembramos que estes elementos são, respectivamente, `categoria`, `confianća`, `ponto inicial` e `ponto final`
 
-O commit para identificar a adicão do pássaro pode ser visto [no Github aqui](https://github.com/Insper/r2019_p1_sim/commit/8b7dfec354650fb062a18a12ec8a9e2b60ba3299)
+O commit para identificar a adicão do pássaro pode ser visto [no Github aqui](https://github.com/Insper/r2019_p1_sim/commit/8b7dfec354650fb062a18a12ec8a9e2b60ba3299) , mas está resumido abaixo.
 
+```python
+for r in resultados:
+    # print(r) - print feito para documentar e entender
+    # o resultado
+    if r[0] == "bird":
+        viu_bird = True
+```
 
 ## 2. 
 
