@@ -23,6 +23,8 @@ cv_image = None
 media = []
 centro = []
 atraso = 1.5E9 # 1 segundo e meio. Em nanossegundos
+viu_bird = False
+viu_circulo = False
 
 area = 0.0 # Variavel com a area do maior contorno
 
@@ -30,12 +32,15 @@ area = 0.0 # Variavel com a area do maior contorno
 # Descarta imagens que chegam atrasadas demais
 check_delay = False 
 
+
 # A função a seguir é chamada sempre que chega um novo frame
 def roda_todo_frame(imagem):
 	print("frame")
 	global cv_image
 	global media
 	global centro
+
+	global viu_bird
 
 	now = rospy.get_rostime()
 	imgtime = imagem.header.stamp
@@ -50,6 +55,11 @@ def roda_todo_frame(imagem):
 		cv_image = bridge.compressed_imgmsg_to_cv2(imagem, "bgr8")
 		centro, imagem, resultados =  visao_module.processa(cv_image)
 
+		for r in resultados:
+			# print(r) - print feito para documentar e entender
+			# o resultado
+			if r[0] == "bird":
+				viu_bird = True
 
 		depois = time.clock()
 		cv2.imshow("Camera", cv_image)
@@ -89,6 +99,20 @@ if __name__=="__main__":
 
 		while not rospy.is_shutdown():
 			vel = Twist(Vector3(0,0,0), Vector3(0,0,0))
+
+			if viu_bird:
+				vel = Twist(Vector3(0.4,0,0), Vector3(0,0,0))
+				velocidade_saida.publish(vel)
+				rospy.sleep(0.8)
+				viu_bird = False
+				continue
+
+			if viu_circulo:
+				vel = Twist(Vector3(0.4,0,0), Vector3(0,0,0))
+				velocidade_saida.publish(vel)
+				rospy.sleep(0.8)
+				continue
+
 			velocidade_saida.publish(vel)
 			rospy.sleep(0.1)
 
