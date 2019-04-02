@@ -156,6 +156,59 @@ Você descobriu que seu robô só tem bateria para andar mais 50 metros.
 
 Pesquise sobre o tópico `/odom` e diga como você faria para que seu robô só andasse 50 metros ou menos. Você precisa dizer em termos de código o que precisaria ser feito, sem fazer efetivamente
 
+
+Vamos analisar o tópico `/odom`
+
+```bash
+borg@ubuntu:~/catkin_ws/src/r2019_p1_sim$ rostopic info /odom
+Type: nav_msgs/Odometry
+
+Publishers: 
+ * /gazebo (http://ubuntu:35619/)
+
+Subscribers: None
+```
+
+Descobrimos que o `/odom` é do tipo `nav_msgs/Odometry`
+
+```bash
+borg@ubuntu:~/catkin_ws/src/r2019_p1_sim$ rosmsg info nav_msgs/Odometry
+std_msgs/Header header
+  uint32 seq
+  time stamp
+  string frame_id
+string child_frame_id
+geometry_msgs/PoseWithCovariance pose
+  geometry_msgs/Pose pose
+    geometry_msgs/Point position
+      float64 x
+      float64 y
+      float64 z
+    geometry_msgs/Quaternion orientation
+      float64 x
+      float64 y
+      float64 z
+      float64 w
+  float64[36] covariance
+geometry_msgs/TwistWithCovariance twist
+  geometry_msgs/Twist twist
+    geometry_msgs/Vector3 linear
+      float64 x
+      float64 y
+      float64 z
+    geometry_msgs/Vector3 angular
+      float64 x
+      float64 y
+      float64 z
+  float64[36] covariance
+
+```
+
+**Resposta: ** Vamos precisar fazer um objeto *Subscriber* para mensagens do tipo *nav_msgs/Odometry* e um método para receber notificacões. As mensagens de odometria tem variáveis `position.x`, `position.y` e `position.z` que trarão a posicão do robô .
+
+Basta descobrirmos a posićão atual usando a primeira notificaćão de odometria e em seguida monitorar até que a distância entre a posićão atual a e inicial seja de $50m$. Quando a distância for de $50m$ deveremos parar o robô para evitar que o mesmo fique sem bateria.
+
+
 ## 6. 
 
 Responda o questionário sobre o simulado enviado por e-mail
