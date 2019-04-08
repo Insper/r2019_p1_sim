@@ -9,8 +9,16 @@ import numpy as np
 import argparse
 import cv2
 
-proto = "MobileNetSSD_deploy.prototxt.txt"
-model = "MobileNetSSD_deploy.caffemodel"
+import rospkg
+import os
+
+
+rospack = rospkg.RosPack()
+path = rospack.get_path('p1_ros')
+scripts = os.path.join(path,  "scripts")
+
+proto = os.path.join(scripts,"MobileNetSSD_deploy.prototxt.txt")
+model = os.path.join(scripts, "MobileNetSSD_deploy.caffemodel")
 confianca = 0.2
 
 

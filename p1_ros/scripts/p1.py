@@ -46,7 +46,6 @@ def auto_canny(image, sigma=0.33):
     return edged
 
 def find_circles(imagem_bgr):
-
     gray = cv2.cvtColor(imagem_bgr, cv2.COLOR_BGR2GRAY)
     # A gaussian blur to get rid of the noise in the image
     blur = cv2.GaussianBlur(gray,(5,5),0)
@@ -57,7 +56,7 @@ def find_circles(imagem_bgr):
     circles = None
 
     # Not: precisamos aumentar o maxRadius - veja a documentacao
-    circles=cv2.HoughCircles(bordas,cv2.HOUGH_GRADIENT,2,40,param1=50,param2=100,minRadius=5,maxRadius=500)
+    circles=cv2.HoughCircles(bordas,cv2.HOUGH_GRADIENT, 2 , minDist=50, param1=50,param2=100,minRadius=100,maxRadius=400)
 
     if circles is not None:
         circles = np.uint16(np.around(circles))
@@ -87,6 +86,8 @@ def roda_todo_frame(imagem):
 
     global viu_bird
 
+    global viu_circulo
+
     now = rospy.get_rostime()
     imgtime = imagem.header.stamp
     lag = now-imgtime # calcula o lag
@@ -111,7 +112,8 @@ def roda_todo_frame(imagem):
                 viu_bird = True
 
         depois = time.clock()
-        cv2.imshow("Camera", cv_image)
+        # Desnecessário - Hough e MobileNet já abrem janelas
+        #cv2.imshow("Camera", cv_image)
     except CvBridgeError as e:
         print('ex', e)
     

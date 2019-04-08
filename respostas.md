@@ -123,7 +123,7 @@ Identifique quando as questões **(1)** e **(2)** acontecerem ao mesmo tempo. De
 
 ### Resposta
 
-No código  da forma que está no gabarito (ver o while do main) o robô iria inicialmente para frente, depois para trás.
+No código  da forma que está no gabarito (ver o while do main) o robô iria vai para a frente porque viu um pássaro, e em seguida pula a parte de ir para trás por causa do `continue`
 
 ```python
             vel = Twist(Vector3(0,0,0), Vector3(0,0,0))
